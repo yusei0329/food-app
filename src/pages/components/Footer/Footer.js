@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Footer = () => {
-  return <>© 2021 yusei-niwa</>;
+  return <footer>© 2021 yusei-niwa</footer>;
 };
 
 export default Footer;
