@@ -5,7 +5,9 @@ const initialState = {
   isError: '',
   post: {},
   score: 0,
-  todayData: {}
+  events: [],
+  foods: [],
+  loading: false
 }
 
 const reduer = (state, action) => {
@@ -16,32 +18,33 @@ const reduer = (state, action) => {
         post: {},
         isError: ''
       }
-    //データの取得に成功した場合
-    //成功なので、isErrorは''
-    //postにはactionで渡されるpayloadを代入
+
     case 'SET_KCAL':
       return {
         post: action.payload
       }
-    //データの取得に失敗した場合
-    //成功なので、isErrorにエラーメッセージを設定
-    case 'FETCH_ERROR':
+
+    case 'SET_FOODS':
       return {
-        isLoading: false,
-        post: {},
-        isError: '読み込みに失敗しました'
+        ...state,
+        foods: action.payload
       }
-    
+
     case 'SET_SCORE':
       return {
         ...state,
         score: action.payload
       }
 
-    case 'SET_DATA':
+    case 'SET_LOCAL':
       return {
         ...state,
-        todayData: action.payload
+        events: action.payload
+      }
+
+    case 'SET_LOAD' :
+      return {
+        loading: action.payload
       }
 
 
