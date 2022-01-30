@@ -9,11 +9,13 @@ const Layout = ({ children }) => {
     <div className={Style.footerFixed}>
       <Grid
         container
+        spacing={4}
         direction="column"
         justifyContent="center"
         alignItems="center"
       >
         <Header />
+
         {children}
         <Footer />
       </Grid>
