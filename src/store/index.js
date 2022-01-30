@@ -7,7 +7,7 @@ const initialState = {
   score: 0,
   events: [],
   foods: [],
-  loading: false
+  Loading: false
 }
 
 const reduer = (state, action) => {
@@ -42,9 +42,9 @@ const reduer = (state, action) => {
         events: action.payload
       }
 
-    case 'SET_LOAD':
-      return {
-        loading: action.payload
+    case 'SET_LOADING':
+      return{
+        Loading: action.payload
       }
 
     //defaultではそのまま渡ってきたstateを返しておく

@@ -2,3 +2,18 @@
   margin-right: 10px;
   min-height: 265px;
 }
+
+.loading-wrap {
+  margin-right: 10px;
+  min-height: 265px;
+  min-width: 500px;
+  text-align: center;
+  position: relative;
+}
+
+.circul {
+  position: absolute;
+  top: 50%;
+
+  left: 50%;
+}

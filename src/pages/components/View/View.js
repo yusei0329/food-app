@@ -9,7 +9,7 @@ import '../Styles/View.css'
 const View = () => {
   const { globalState } = useContext(Store);
 
-  
+
 
   return (
     <div className='view-wrap'>
@@ -22,7 +22,7 @@ const View = () => {
           bgcolor: 'background.paper',
           position: 'relative',
           overflow: 'auto',
-          maxHeight: 250,
+          maxHeight: 200,
           '& ul': { padding: 0 },
         }}
         subheader={<li />}
