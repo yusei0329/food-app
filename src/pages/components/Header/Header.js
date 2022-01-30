@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext, useRef } from 'react'
 import { Store } from '../../../store';
 
 const Header = () => {
-  const { globalState, setGlobalState } = useContext(Store);
+  const { globalState } = useContext(Store);
 
   return (
       <div>

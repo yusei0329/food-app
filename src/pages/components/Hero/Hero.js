@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext, useRef } from 'react'
-import { Link } from 'react-router-dom'
 import axios from 'axios';
 import { Store } from '../../../store';
 import TextField from '@mui/material/TextField';
@@ -40,8 +39,8 @@ const Hero = () => {
         </Button>
       </div>
       <div>
-        <h1>{globalState.post ? globalState.post["食品名"] : "no data"}</h1>
-        <h3>{globalState.post ? Math.floor(globalState.post["エネルギー（kcal）"]) + "kcal" : "no data"}</h3>
+        <h1>{Object.keys(globalState.post).length !== 0 ? globalState.post["食品名"] : "本日食べた食材を検索しよう"}</h1>
+        <h2>{Object.keys(globalState.post).length !== 0 ? Math.floor(Number(globalState.post["エネルギー（kcal）"])) + "kcal" : ""}</h2>
       </div>
     </>
   )

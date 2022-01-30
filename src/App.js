@@ -11,7 +11,6 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Top />} />
-            <Route path="/watch" element={<Watch />} />
           </Routes>
         </BrowserRouter>
       </div>
