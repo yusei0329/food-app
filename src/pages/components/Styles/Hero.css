@@ -1,0 +1,17 @@
+.input-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.input-text {
+  margin-right: 5%;
+}
+
+.input-button {
+  margin-left: 5%;
+}
+
+.title-wrap {
+  text-align: center;
+}

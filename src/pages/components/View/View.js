@@ -4,12 +4,16 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemButton from '@mui/material/ListItemButton';
+import '../Styles/View.css'
 
 const View = () => {
   const { globalState } = useContext(Store);
 
+  
+
   return (
-    <>
+    <div className='view-wrap'>
+      <h3>過去のデータ</h3>
       <List
         sx={{
           width: '100%',
@@ -36,7 +40,7 @@ const View = () => {
           }
         </ul>
       </List>
-    </>
+    </div>
   );
 };
 

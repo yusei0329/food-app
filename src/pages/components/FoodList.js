@@ -5,7 +5,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
-import Style from './Styles/FoodList.css'
+import './Styles/FoodList.css'
 
 const APP_KEY = 'scoreData';
 let total = 0;
@@ -86,8 +86,8 @@ const FoodList = () => {
 
   return (
     <>
-      <div className={Style.wrap}>
-        <div className={Style.button_group}>
+      <div className='food-wrap'>
+        <div className='food-button'>
           <ButtonGroup variant="text" aria-label="text button group">
             <Button onClick={setDatas}>追加</Button>
             <Button onClick={handleClearData}>削除</Button>

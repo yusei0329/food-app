@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
 import { Store } from '../../store/index'
 import axios from 'axios';
-import Button from '@mui/material/Button';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemButton from '@mui/material/ListItemButton';
+import './Styles/FoodSearch.css'
 
 const FoodSearch = () => {
   const weight = "100";
@@ -22,12 +22,12 @@ const FoodSearch = () => {
 
   return (
     <>
-      <div>
+      <div className='list-items'>
         <List
           sx={{
             width: '100%',
             minWidth: 500,
-            maxWidth: 1000,
+            maxWidth: 500,
             bgcolor: 'background.paper',
             position: 'relative',
             overflow: 'auto',
