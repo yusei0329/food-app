@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useContext, useRef } from 'react'
-import { Link } from 'react-router-dom'
 import axios from 'axios';
 import { Store } from '../../../store';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import { Grid } from '@mui/material';
+import "../Styles/Hero.css"
 
 const Hero = () => {
   const { globalState, setGlobalState } = useContext(Store);
@@ -27,21 +28,29 @@ const Hero = () => {
 
   return (
     <>
-      <div>
-        <TextField
-          id="outlined-basic"
-          label="検索"
-          variant="outlined"
-          onChange={e => setTerm(e.target.value)}
-          value={term} />
-        <Button onClick={() => setDisplay(!display)}>
-          {/* <FontAwesomeIcon icon={faCoffee} /> */}
-          検索
-        </Button>
+      <div className='input-wrap'>
+        <div className='input-text'>
+          <TextField
+            id="outlined-basic"
+            label="食品名を入力"
+            variant="outlined"
+            onChange={e => setTerm(e.target.value)}
+            value={term} />
+        </div>
+        <div className='input-button'>
+          <Button
+            variant="outlined"
+            size="medium"
+            onClick={() => setDisplay(!display)}>
+            {/* <FontAwesomeIcon icon={faCoffee} /> */}
+            検索
+          </Button>
+        </div>
+
       </div>
-      <div>
-        <h1>{globalState.post ? globalState.post["食品名"] : "no data"}</h1>
-        <h3>{globalState.post ? Math.floor(globalState.post["エネルギー（kcal）"]) + "kcal" : "no data"}</h3>
+      <div className='title-wrap'>
+        <h1>{Object.keys(globalState.post).length !== 0 ? globalState.post["食品名"] : "本日食べた食材を検索しよう"}</h1>
+        <h2>{Object.keys(globalState.post).length !== 0 ? Math.floor(Number(globalState.post["エネルギー（kcal）"])) + "kcal" : ""}</h2>
       </div>
     </>
   )

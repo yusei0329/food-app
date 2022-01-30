@@ -42,11 +42,10 @@ const reduer = (state, action) => {
         events: action.payload
       }
 
-    case 'SET_LOAD' :
+    case 'SET_LOAD':
       return {
         loading: action.payload
       }
-
 
     //defaultではそのまま渡ってきたstateを返しておく
     default:

@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { Store } from '../store/index'
-import { Link, Location, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import LocationChange from './components/LocationChange/LocationChange';
 
 const Watch = () => {

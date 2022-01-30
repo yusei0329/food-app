@@ -15,9 +15,7 @@ const Layout = ({ children }) => {
         alignItems="center"
       >
         <Header />
-
         {children}
-        <Footer />
       </Grid>
     </div>
   )
