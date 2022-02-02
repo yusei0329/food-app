@@ -34,9 +34,14 @@ const FoodList = () => {
   }, [viewData])
 
   const setDatas = () => {
-    if (Object.keys(globalState.post).length !== 0) {
-      setAlert(false);
-      setViewData([...viewData, { name: globalState.post["食品名"], kcal: Math.floor(globalState.post["エネルギー（kcal）"]), isDone: false }])
+    if (globalState.post !== undefined && globalState.post !== null) {
+      if (Object.keys(globalState.post).length !== 0) {
+        setAlert(false);
+        setViewData([...viewData, { name: globalState.post["食品名"], kcal: Math.floor(globalState.post["エネルギー（kcal）"]), isDone: false }])
+      } else {
+        setMessages('追加する食品を選択してください');
+        setAlert(true);
+      }
     } else {
       setMessages('追加する食品を選択してください');
       setAlert(true);
@@ -47,14 +52,14 @@ const FoodList = () => {
     setViewData(
       viewData.map((data, _i) => (_i === i ? { ...data, isDone: e.target.checked } : data))
     );
-    console.log(viewData);
+    //console.log(viewData);
   }
 
   const handleClearData = () => {
     let result = viewData.every(function (val) {
       return val.isDone == false;
     });
-    console.log(result)
+    //console.log(result)
     if (result !== true) {
       setAlert(false);
       const newData = viewData.filter((data) => !data.isDone);
