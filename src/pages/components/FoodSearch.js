@@ -18,7 +18,6 @@ const FoodSearch = () => {
     await axios.get(`https://script.google.com/macros/s/AKfycbx7WZ-wdIBLqVnCxPwzedIdjhC3CMjhAcV0MufN2gJd-xsO3xw/exec?num=${foodNum}&weight=${weight}`).then((res) => {
       console.log(res.data)
       setGlobalState({ type: "SET_KCAL", payload: res.data })
-
       // console.log(globalState.post);
     })
   }, [foodNum])

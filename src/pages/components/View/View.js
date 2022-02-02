@@ -9,8 +9,6 @@ import '../Styles/View.css'
 const View = () => {
   const { globalState } = useContext(Store);
 
-
-
   return (
     <div className='view-wrap'>
       <h3>過去のデータ</h3>
@@ -36,7 +34,7 @@ const View = () => {
                   <ListItemText>{`${event.days}, Score ${event.points}%`}</ListItemText>
                 </ListItemButton>
               </ListItem>
-            )) : <span></span>
+            )) : <span>過去のデータが表示されます</span>
           }
         </ul>
       </List>

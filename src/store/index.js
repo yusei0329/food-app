@@ -5,20 +5,13 @@ const initialState = {
   isError: '',
   post: {},
   score: 0,
-  events: [],
+  events: null,
   foods: [],
   Loading: false
 }
 
 const reduer = (state, action) => {
   switch (action.type) {
-    case 'FETCH_INIT':
-      return {
-        isLoading: true,
-        post: {},
-        isError: ''
-      }
-
     case 'SET_KCAL':
       return {
         post: action.payload

@@ -15,6 +15,8 @@ let NOW_DATE = new Date();
 const FoodList = () => {
   const { globalState, setGlobalState } = useContext(Store);
   const [viewData, setViewData] = useState([]);
+  const [alert, setAlert] = useState(false);
+  const [messages, setMessages] = useState('');
 
   useEffect(() => {
     if (Object.keys(viewData).length !== 0) {
@@ -33,7 +35,11 @@ const FoodList = () => {
 
   const setDatas = () => {
     if (Object.keys(globalState.post).length !== 0) {
+      setAlert(false);
       setViewData([...viewData, { name: globalState.post["食品名"], kcal: Math.floor(globalState.post["エネルギー（kcal）"]), isDone: false }])
+    } else {
+      setMessages('追加する食品を選択してください');
+      setAlert(true);
     }
   }
 
@@ -45,9 +51,19 @@ const FoodList = () => {
   }
 
   const handleClearData = () => {
-    //console.log(viewData)
-    const newData = viewData.filter((data) => !data.isDone);
-    setViewData(newData);
+    let result = viewData.every(function (val) {
+      return val.isDone == false;
+    });
+    console.log(result)
+    if (result !== true) {
+      setAlert(false);
+      const newData = viewData.filter((data) => !data.isDone);
+      setViewData(newData);
+    } else {
+      setMessages('削除する食品を選択してください');
+      setAlert(true);
+    }
+
   }
 
   const scoreKeep = () => {
@@ -85,6 +101,21 @@ const FoodList = () => {
     }
   }
 
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setAlert(false);
+  };
+
+  const action = (
+    <>
+      <Button color="secondary" size="small" onClick={handleClose}>
+        UNDO
+      </Button>
+    </>
+  );
+
   return (
     <>
       <div className='food-wrap'>
@@ -94,6 +125,7 @@ const FoodList = () => {
             <Button onClick={handleClearData}>削除</Button>
             <Button onClick={scoreKeep}>今日のデータを記録</Button>
             <Button onClick={() => setGlobalState({ type: 'SET_LOCAL', payload: JSON.parse(localStorage.getItem(APP_KEY)) })} >過去のデータを見る</Button>
+            <Button onClick={() => setGlobalState({ type: 'SET_LOCAL', payload: null })}>閉じる</Button>
           </ButtonGroup>
         </div>
 
@@ -123,6 +155,13 @@ const FoodList = () => {
           }
         </List>
       </div>
+      <Snackbar
+        open={alert}
+        autoHideDuration={6000}
+        onClose={handleClose}
+        message={messages}
+        action={action}
+      />
     </>
   );
 };
