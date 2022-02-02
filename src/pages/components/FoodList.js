@@ -72,8 +72,9 @@ const FoodList = () => {
   }
 
   const scoreKeep = () => {
-    console.log(globalState.score)
+    //console.log(globalState.score)
     if (Object.keys(viewData).length !== 0) {
+      setAlert(false);
       //localStorage.removeItem(APP_KEY);
       const appState = localStorage.getItem(APP_KEY);
       let year = NOW_DATE.getFullYear();
@@ -103,6 +104,9 @@ const FoodList = () => {
         setGlobalState({ type: 'SET_LOCAL', payload: JSON.parse(localStorage.getItem(APP_KEY)) });
         //console.log(globalState.events)
       }
+    } else {
+      setMessages('データを入力してください');
+      setAlert(true);
     }
   }
 
