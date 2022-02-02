@@ -3,28 +3,59 @@ import axios from 'axios';
 import { Store } from '../../../store';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import { Grid } from '@mui/material';
+import Snackbar from '@mui/material/Snackbar';
 import "../Styles/Hero.css"
 
 const Hero = () => {
   const { globalState, setGlobalState } = useContext(Store);
   const [term, setTerm] = useState('');
-  const [display, setDisplay] = useState(false);
-  const ref = useRef(true);
+  const [open, setOpen] = useState(false);
+  const [foodTitle, setFoodtitle] = useState({});
 
-  useEffect(async () => {
-    if (ref.current) {
-      ref.current = false;
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
       return;
     }
-    await axios.get(`https://script.google.com/macros/s/AKfycbzO6IMoPPbtBLb_AnRwgB1OheJyF5XwgNyj28NZdyjg76q4AzX0/exec/exec?name=${term}`).then((res) => {
-      const foods = res.data;
-      setGlobalState({ type: 'SET_FOODS', payload: Object.entries(foods) })
-      //setFoodData(Object.entries(foods));
-      //console.log(foodNum)
-    })
-  }, [display])
+    setOpen(false);
+  };
 
+  const ref = useRef(true);
+
+  const setDisplay = async () => {
+    if (term !== "") {
+      setOpen(false);
+      setGlobalState({ type: 'SET_LOADING', payload: true })
+      await axios.get(`https://script.google.com/macros/s/AKfycbzO6IMoPPbtBLb_AnRwgB1OheJyF5XwgNyj28NZdyjg76q4AzX0/exec/exec?name=${term}`).then((res) => {
+        const foods = res.data;
+        setGlobalState({ type: 'SET_LOADING', payload: false })
+        setGlobalState({ type: 'SET_FOODS', payload: Object.entries(foods) })
+        //setFoodData(Object.entries(foods));
+        //console.log(foodNum)
+      })
+    } else {
+      setOpen(true);
+    }
+  }
+
+  const action = (
+    <>
+      <Button color="secondary" size="small" onClick={handleClose}>
+        UNDO
+      </Button>
+    </>
+  );
+
+  useEffect(() => {
+    console.log(foodTitle)
+    if (globalState.post !== undefined && globalState.post !== null) {
+      if(Object.keys(globalState.post).length !== 0){
+        setFoodtitle({
+          name: globalState.post["食品名"],
+          num: globalState.post["エネルギー（kcal）"]
+        })
+      }
+    }
+  }, [globalState.post])
 
   return (
     <>
@@ -41,7 +72,7 @@ const Hero = () => {
           <Button
             variant="outlined"
             size="medium"
-            onClick={() => setDisplay(!display)}>
+            onClick={setDisplay}>
             {/* <FontAwesomeIcon icon={faCoffee} /> */}
             検索
           </Button>
@@ -49,9 +80,16 @@ const Hero = () => {
 
       </div>
       <div className='title-wrap'>
-        <h1>{Object.keys(globalState.post).length !== 0 ? globalState.post["食品名"] : "本日食べた食材を検索しよう"}</h1>
-        <h2>{Object.keys(globalState.post).length !== 0 ? Math.floor(Number(globalState.post["エネルギー（kcal）"])) + "kcal" : ""}</h2>
+        <h1>{Object.keys(foodTitle).length !== 0 ? foodTitle.name : "本日食べた食材を検索しよう"}</h1>
+        <h2>{Object.keys(foodTitle).length !== 0 ? foodTitle.num + "kcal" : ""}</h2>
       </div>
+      <Snackbar
+        open={open}
+        autoHideDuration={6000}
+        onClose={handleClose}
+        message="食品名を入力してください"
+        action={action}
+      />
     </>
   )
 };

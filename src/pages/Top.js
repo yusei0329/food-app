@@ -12,7 +12,7 @@ const Top = () => {
       <Hero />
       <div>
         <Grid
-          container 
+          container
           direction="row"
           justifyContent="center"
           alignItems="center"

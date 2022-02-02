@@ -5,20 +5,13 @@ const initialState = {
   isError: '',
   post: {},
   score: 0,
-  events: [],
+  events: null,
   foods: [],
-  loading: false
+  Loading: false
 }
 
 const reduer = (state, action) => {
   switch (action.type) {
-    case 'FETCH_INIT':
-      return {
-        isLoading: true,
-        post: {},
-        isError: ''
-      }
-
     case 'SET_KCAL':
       return {
         post: action.payload
@@ -42,9 +35,9 @@ const reduer = (state, action) => {
         events: action.payload
       }
 
-    case 'SET_LOAD':
-      return {
-        loading: action.payload
+    case 'SET_LOADING':
+      return{
+        Loading: action.payload
       }
 
     //defaultではそのまま渡ってきたstateを返しておく

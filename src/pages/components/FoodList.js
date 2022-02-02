@@ -5,6 +5,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
+import Snackbar from '@mui/material/Snackbar';
 import './Styles/FoodList.css'
 
 const APP_KEY = 'scoreData';
@@ -14,6 +15,8 @@ let NOW_DATE = new Date();
 const FoodList = () => {
   const { globalState, setGlobalState } = useContext(Store);
   const [viewData, setViewData] = useState([]);
+  const [alert, setAlert] = useState(false);
+  const [messages, setMessages] = useState('');
 
   useEffect(() => {
     if (Object.keys(viewData).length !== 0) {
@@ -31,8 +34,17 @@ const FoodList = () => {
   }, [viewData])
 
   const setDatas = () => {
-    if (Object.keys(globalState.post).length !== 0) {
-      setViewData([...viewData, { name: globalState.post["食品名"], kcal: Math.floor(globalState.post["エネルギー（kcal）"]), isDone: false }])
+    if (globalState.post !== undefined && globalState.post !== null) {
+      if (Object.keys(globalState.post).length !== 0) {
+        setAlert(false);
+        setViewData([...viewData, { name: globalState.post["食品名"], kcal: Math.floor(globalState.post["エネルギー（kcal）"]), isDone: false }])
+      } else {
+        setMessages('追加する食品を選択してください');
+        setAlert(true);
+      }
+    } else {
+      setMessages('追加する食品を選択してください');
+      setAlert(true);
     }
   }
 
@@ -40,18 +52,29 @@ const FoodList = () => {
     setViewData(
       viewData.map((data, _i) => (_i === i ? { ...data, isDone: e.target.checked } : data))
     );
-    console.log(viewData);
+    //console.log(viewData);
   }
 
   const handleClearData = () => {
-    //console.log(viewData)
-    const newData = viewData.filter((data) => !data.isDone);
-    setViewData(newData);
+    let result = viewData.every(function (val) {
+      return val.isDone == false;
+    });
+    //console.log(result)
+    if (result !== true) {
+      setAlert(false);
+      const newData = viewData.filter((data) => !data.isDone);
+      setViewData(newData);
+    } else {
+      setMessages('削除する食品を選択してください');
+      setAlert(true);
+    }
+
   }
 
   const scoreKeep = () => {
-    console.log(globalState.score)
+    //console.log(globalState.score)
     if (Object.keys(viewData).length !== 0) {
+      setAlert(false);
       //localStorage.removeItem(APP_KEY);
       const appState = localStorage.getItem(APP_KEY);
       let year = NOW_DATE.getFullYear();
@@ -81,8 +104,26 @@ const FoodList = () => {
         setGlobalState({ type: 'SET_LOCAL', payload: JSON.parse(localStorage.getItem(APP_KEY)) });
         //console.log(globalState.events)
       }
+    } else {
+      setMessages('データを入力してください');
+      setAlert(true);
     }
   }
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setAlert(false);
+  };
+
+  const action = (
+    <>
+      <Button color="secondary" size="small" onClick={handleClose}>
+        UNDO
+      </Button>
+    </>
+  );
 
   return (
     <>
@@ -93,6 +134,7 @@ const FoodList = () => {
             <Button onClick={handleClearData}>削除</Button>
             <Button onClick={scoreKeep}>今日のデータを記録</Button>
             <Button onClick={() => setGlobalState({ type: 'SET_LOCAL', payload: JSON.parse(localStorage.getItem(APP_KEY)) })} >過去のデータを見る</Button>
+            <Button onClick={() => setGlobalState({ type: 'SET_LOCAL', payload: null })}>閉じる</Button>
           </ButtonGroup>
         </div>
 
@@ -122,6 +164,13 @@ const FoodList = () => {
           }
         </List>
       </div>
+      <Snackbar
+        open={alert}
+        autoHideDuration={6000}
+        onClose={handleClose}
+        message={messages}
+        action={action}
+      />
     </>
   );
 };

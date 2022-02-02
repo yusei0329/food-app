@@ -4,10 +4,17 @@ import '../Styles/Header.css'
 
 const Header = () => {
   const { globalState } = useContext(Store);
+  const [scoreNum, setScoreNum] = useState('');
+
+  useEffect(() => {
+    if (globalState.score !== undefined && globalState.score !== null) {
+    setScoreNum(globalState.score);
+    }
+  }, [globalState.score])
 
   return (
       <div className='score-text'>
-        <h1>{globalState.score ? globalState.score + "%" : <span>score</span>}</h1>
+        <h1>{scoreNum ? scoreNum + "%" : <span>score</span>}</h1>
       </div>
   )
 }
