@@ -6,7 +6,6 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemButton from '@mui/material/ListItemButton';
 import CircularProgress from '@mui/material/CircularProgress';
-import Box from '@mui/material/Box';
 import './Styles/FoodSearch.css'
 
 const FoodSearch = () => {
@@ -16,8 +15,10 @@ const FoodSearch = () => {
   const [foodsData, setFoodsData] = useState([]);
 
   useEffect(async () => {
+    setGlobalState({ type: 'SET_TITLE', payload: true });
     await axios.get(`https://script.google.com/macros/s/AKfycbx7WZ-wdIBLqVnCxPwzedIdjhC3CMjhAcV0MufN2gJd-xsO3xw/exec?num=${foodNum}&weight=${weight}`).then((res) => {
       console.log(res.data)
+      setGlobalState({ type: 'SET_TITLE', payload: false });
       setGlobalState({ type: "SET_KCAL", payload: res.data })
       // console.log(globalState.post);
     })
@@ -49,7 +50,7 @@ const FoodSearch = () => {
               bgcolor: 'background.paper',
               position: 'relative',
               overflow: 'auto',
-              maxHeight: 250,
+              maxHeight: 290,
               '& ul': { padding: 0 },
             }}
             subheader={<li />}

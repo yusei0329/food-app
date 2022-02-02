@@ -8,14 +8,16 @@ const Header = () => {
 
   useEffect(() => {
     if (globalState.score !== undefined && globalState.score !== null) {
-    setScoreNum(globalState.score);
+      setScoreNum(globalState.score);
     }
   }, [globalState.score])
 
   return (
+    <div className='header'>
       <div className='score-text'>
         <h1>{scoreNum ? scoreNum + "%" : <span>score</span>}</h1>
       </div>
+    </div>
   )
 }
 

@@ -1,4 +1,9 @@
 .view-wrap {
   text-align: center;
   margin-top: 25px;
+  color: #333;
+}
+
+.view-list {
+  margin: 25px;
 }

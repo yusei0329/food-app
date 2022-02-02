@@ -34,6 +34,7 @@ const FoodList = () => {
   }, [viewData])
 
   const setDatas = () => {
+    
     if (globalState.post !== undefined && globalState.post !== null) {
       if (Object.keys(globalState.post).length !== 0) {
         setAlert(false);

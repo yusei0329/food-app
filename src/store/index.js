@@ -1,7 +1,7 @@
 import React, { createContext, useReducer } from 'react'
 
 const initialState = {
-  isLoading: true,
+  isLoading: false,
   isError: '',
   post: {},
   score: 0,
@@ -38,6 +38,11 @@ const reduer = (state, action) => {
     case 'SET_LOADING':
       return{
         Loading: action.payload
+      }
+    
+    case 'SET_TITLE':
+      return{
+        isLoading: action.payload
       }
 
     //defaultではそのまま渡ってきたstateを返しておく

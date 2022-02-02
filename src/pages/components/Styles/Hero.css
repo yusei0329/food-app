@@ -1,4 +1,5 @@
 .input-wrap {
+  margin-top: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -13,5 +14,7 @@
 }
 
 .title-wrap {
+  margin: 20px;
+  min-height: 120px;
   text-align: center;
 }
