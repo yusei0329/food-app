@@ -23,6 +23,11 @@ const Hero = () => {
     })
   }
 
+  // useEffect(() => {
+  //   console.log("globalstate.post = ")
+  //   console.log(globalState.post)
+  // },[globalState.post])
+
   return (
     <>
       <div className='input-wrap'>

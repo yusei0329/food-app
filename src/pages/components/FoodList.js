@@ -5,6 +5,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
+import Snackbar from '@mui/material/Snackbar';
 import './Styles/FoodList.css'
 
 const APP_KEY = 'scoreData';
