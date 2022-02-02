@@ -10,6 +10,7 @@ const Hero = () => {
   const { globalState, setGlobalState } = useContext(Store);
   const [term, setTerm] = useState('');
   const [open, setOpen] = useState(false);
+  const [foodTitle, setFoodtitle] = useState({});
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
@@ -44,11 +45,17 @@ const Hero = () => {
     </>
   );
 
-  // useEffect(() => {
-  //   console.log("globalstate.post = ")
-  //   console.log(globalState.post);
-  //   setGlobalState({ type:'SET_KCAL', payload: null })
-  // },[])
+  useEffect(() => {
+    console.log(foodTitle)
+    if (globalState.post !== undefined && globalState.post !== null) {
+      if(Object.keys(globalState.post).length !== 0){
+        setFoodtitle({
+          name: globalState.post["食品名"],
+          num: globalState.post["エネルギー（kcal）"]
+        })
+      }
+    }
+  }, [globalState.post])
 
   return (
     <>
@@ -73,8 +80,8 @@ const Hero = () => {
 
       </div>
       <div className='title-wrap'>
-        <h1>{globalState.post ? globalState.post["食品名"] : "本日食べた食材を検索しよう"}</h1>
-        <h2>{globalState.post ? Math.floor(Number(globalState.post["エネルギー（kcal）"])) + "kcal" : ""}</h2>
+        <h1>{Object.keys(foodTitle).length !== 0 ? foodTitle.name : "本日食べた食材を検索しよう"}</h1>
+        <h2>{Object.keys(foodTitle).length !== 0 ? foodTitle.num + "kcal" : ""}</h2>
       </div>
       <Snackbar
         open={open}

@@ -13,6 +13,7 @@ const FoodSearch = () => {
   const weight = "100";
   const { globalState, setGlobalState } = useContext(Store);
   const [foodNum, setFoodNum] = useState('');
+  const [foodsData, setFoodsData] = useState([]);
 
   useEffect(async () => {
     await axios.get(`https://script.google.com/macros/s/AKfycbx7WZ-wdIBLqVnCxPwzedIdjhC3CMjhAcV0MufN2gJd-xsO3xw/exec?num=${foodNum}&weight=${weight}`).then((res) => {
@@ -21,6 +22,12 @@ const FoodSearch = () => {
       // console.log(globalState.post);
     })
   }, [foodNum])
+
+  useEffect(() => {
+    if (globalState.foods !== undefined && globalState.foods !== null) {
+      setFoodsData(globalState.foods);
+    }
+  },[ globalState.foods ])
 
   if (globalState.Loading) {
     return (
@@ -50,7 +57,7 @@ const FoodSearch = () => {
             <ul>
               {
                 // //foodData[0]
-                globalState.foods ? globalState.foods.map((food, index) => (
+                foodsData ? foodsData.map((food, index) => (
                   <ListItem key={`food-${index}`}>
                     <ListItemButton>
                       <ListItemText onClick={() => setFoodNum(food[1].split(',')[0])}>{food[1].split(',')[1]}</ListItemText>
