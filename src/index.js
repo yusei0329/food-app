@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { StoreProvider } from './store/index';
-import normalize from "normalize.css";
+import "normalize.css";
 import "./pages/components/Styles/index.css"
 
 ReactDOM.render(
