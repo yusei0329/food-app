@@ -1,11 +1,12 @@
 import React, { createContext, useReducer } from 'react'
 
 const initialState = {
-  isLoading: true,
+  isLoading: false,
   isError: '',
   post: {},
+  weight: 0,
   score: 0,
-  events: null,
+  events: [],
   foods: [],
   Loading: false
 }
@@ -16,6 +17,11 @@ const reduer = (state, action) => {
       return {
         post: action.payload
       }
+
+    case 'SET_WEIGHT': 
+    return {
+      weight: action.payload
+    }
 
     case 'SET_FOODS':
       return {
@@ -38,6 +44,11 @@ const reduer = (state, action) => {
     case 'SET_LOADING':
       return{
         Loading: action.payload
+      }
+    
+    case 'SET_TITLE':
+      return{
+        isLoading: action.payload
       }
 
     //defaultではそのまま渡ってきたstateを返しておく

@@ -1,17 +1,26 @@
 .input-wrap {
+  margin-top: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.input-text {
+.input-text-mane {
   margin-right: 5%;
+}
+
+.input-text-mane {
+  margin-left: 5%;
 }
 
 .input-button {
   margin-left: 5%;
+  margin-right: 5%;
 }
 
 .title-wrap {
+  margin: 20px;
+  min-height: 120px;
   text-align: center;
+  color: #333;
 }

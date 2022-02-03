@@ -6,6 +6,8 @@ import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Snackbar from '@mui/material/Snackbar';
+import { IconContext } from 'react-icons';
+import { AiOutlineCloseSquare } from 'react-icons/ai';
 import './Styles/FoodList.css'
 
 const APP_KEY = 'scoreData';
@@ -34,6 +36,7 @@ const FoodList = () => {
   }, [viewData])
 
   const setDatas = () => {
+    // localStorage.removeItem(APP_KEY)
     if (globalState.post !== undefined && globalState.post !== null) {
       if (Object.keys(globalState.post).length !== 0) {
         setAlert(false);
@@ -57,7 +60,7 @@ const FoodList = () => {
 
   const handleClearData = () => {
     let result = viewData.every(function (val) {
-      return val.isDone == false;
+      return val.isDone === false;
     });
     //console.log(result)
     if (result !== true) {
@@ -119,9 +122,9 @@ const FoodList = () => {
 
   const action = (
     <>
-      <Button color="secondary" size="small" onClick={handleClose}>
-        UNDO
-      </Button>
+      <IconContext.Provider value={{ color: '#ccc', size: '30px' }}>
+        <AiOutlineCloseSquare onClick={handleClose} />
+      </IconContext.Provider>
     </>
   );
 
@@ -134,35 +137,36 @@ const FoodList = () => {
             <Button onClick={handleClearData}>削除</Button>
             <Button onClick={scoreKeep}>今日のデータを記録</Button>
             <Button onClick={() => setGlobalState({ type: 'SET_LOCAL', payload: JSON.parse(localStorage.getItem(APP_KEY)) })} >過去のデータを見る</Button>
-            <Button onClick={() => setGlobalState({ type: 'SET_LOCAL', payload: null })}>閉じる</Button>
+            <Button onClick={() => setGlobalState({ type: 'SET_LOCAL', payload: [] })}>閉じる</Button>
           </ButtonGroup>
         </div>
-
-        <List
-          sx={{
-            width: '100%',
-            minWidth: 500,
-            maxWidth: 1000,
-            bgcolor: 'background.paper',
-            position: 'relative',
-            overflow: 'auto',
-            maxHeight: 250,
-            '& ul': { padding: 0 },
-          }}
-          subheader={<li />}
-        >
-          {
-            viewData ? viewData.map((view, index) => (
-              <ListItemButton key={`food-${index}`}>
-                <Checkbox
-                  onChange={(e) => handleCeckBox(e, index)}
-                  checked={view.isDone}
-                />
-                {`${view.name} - ${view.kcal}kcal`}
-              </ListItemButton>
-            )) : <span>no data</span>
-          }
-        </List>
+        <div className='food-list-wrap'>
+          <List
+            sx={{
+              width: '100%',
+              minWidth: 500,
+              maxWidth: 500,
+              bgcolor: 'background.paper',
+              position: 'relative',
+              overflow: 'auto',
+              maxHeight: 250,
+              '& ul': { padding: 0 },
+            }}
+            subheader={<li />}
+          >
+            {
+              viewData.length !== 0 ? viewData.map((view, index) => (
+                <ListItemButton key={`food-${index}`}>
+                  <Checkbox
+                    onChange={(e) => handleCeckBox(e, index)}
+                    checked={view.isDone}
+                  />
+                  {`${view.name} - ${view.kcal}kcal`}
+                </ListItemButton>
+              )) : <span></span>
+            }
+          </List>
+        </div>
       </div>
       <Snackbar
         open={alert}

@@ -6,18 +6,30 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemButton from '@mui/material/ListItemButton';
 import CircularProgress from '@mui/material/CircularProgress';
-import Box from '@mui/material/Box';
 import './Styles/FoodSearch.css'
 
 const FoodSearch = () => {
   const weight = "100";
   const { globalState, setGlobalState } = useContext(Store);
-  const [foodNum, setFoodNum] = useState('');
+  const foodWight = useRef('');
+  const [foodNum, setFoodNum] = useState({});
   const [foodsData, setFoodsData] = useState([]);
 
+  useEffect(() => {
+    if (globalState.weight !== undefined && globalState.weight !== null) {
+      foodWight.current = globalState.weight;
+      //setFoodNum('');
+      //setFoodWeight(foodWight);
+      //console.log(foodWight)
+    }
+  }, [globalState.weight])
+
   useEffect(async () => {
-    await axios.get(`https://script.google.com/macros/s/AKfycbx7WZ-wdIBLqVnCxPwzedIdjhC3CMjhAcV0MufN2gJd-xsO3xw/exec?num=${foodNum}&weight=${weight}`).then((res) => {
+    console.log(foodNum)
+    setGlobalState({ type: 'SET_TITLE', payload: true });
+    await axios.get(`https://script.google.com/macros/s/AKfycbx7WZ-wdIBLqVnCxPwzedIdjhC3CMjhAcV0MufN2gJd-xsO3xw/exec?num=${foodNum.num}&weight=${foodNum.wei}`).then((res) => {
       console.log(res.data)
+      setGlobalState({ type: 'SET_TITLE', payload: false });
       setGlobalState({ type: "SET_KCAL", payload: res.data })
       // console.log(globalState.post);
     })
@@ -27,13 +39,13 @@ const FoodSearch = () => {
     if (globalState.foods !== undefined && globalState.foods !== null) {
       setFoodsData(globalState.foods);
     }
-  },[ globalState.foods ])
+  }, [globalState.foods])
 
   if (globalState.Loading) {
     return (
       <div className='loading-wrap'>
         <div className='circul'>
-        <CircularProgress />
+          <CircularProgress />
         </div>
       </div>
     )
@@ -49,7 +61,7 @@ const FoodSearch = () => {
               bgcolor: 'background.paper',
               position: 'relative',
               overflow: 'auto',
-              maxHeight: 250,
+              maxHeight: 290,
               '& ul': { padding: 0 },
             }}
             subheader={<li />}
@@ -57,13 +69,13 @@ const FoodSearch = () => {
             <ul>
               {
                 // //foodData[0]
-                foodsData ? foodsData.map((food, index) => (
+                foodsData.length !== 0 ? foodsData.map((food, index) => (
                   <ListItem key={`food-${index}`}>
                     <ListItemButton>
-                      <ListItemText onClick={() => setFoodNum(food[1].split(',')[0])}>{food[1].split(',')[1]}</ListItemText>
+                      <ListItemText onClick={() => setFoodNum({ num:food[1].split(',')[0], wei: foodWight.current})}>{food[1].split(',')[1]}</ListItemText>
                     </ListItemButton>
                   </ListItem>
-                )) : <span></span>
+                )) : <span className='list-span'>検索結果が表示されます<br/>データが存在しません</span>
               }
             </ul>
           </List>
