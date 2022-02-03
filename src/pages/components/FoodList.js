@@ -6,6 +6,8 @@ import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Snackbar from '@mui/material/Snackbar';
+import { IconContext } from 'react-icons'
+import { AiOutlineCloseSquare } from 'react-icons/ai';
 import './Styles/FoodList.css'
 
 const APP_KEY = 'scoreData';
@@ -120,9 +122,9 @@ const FoodList = () => {
 
   const action = (
     <>
-      <Button color="secondary" size="small" onClick={handleClose}>
-        UNDO
-      </Button>
+      <IconContext.Provider value={{ color: '#ccc', size: '30px' }}>
+        <AiOutlineCloseSquare onClick={handleClose} />
+      </IconContext.Provider>
     </>
   );
 

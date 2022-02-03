@@ -15,7 +15,7 @@ const Header = () => {
   return (
     <div className='header'>
       <div className='score-text'>
-        <h1>{scoreNum ? scoreNum + "%" : <span>score</span>}</h1>
+        <h1>{scoreNum ? scoreNum + "%" : <span>0%</span>}</h1>
       </div>
     </div>
   )

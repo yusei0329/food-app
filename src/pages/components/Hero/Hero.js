@@ -5,6 +5,8 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Snackbar from '@mui/material/Snackbar';
 import Skeleton from '@mui/material/Skeleton';
+import { IconContext } from 'react-icons'
+import { AiOutlineCloseSquare } from 'react-icons/ai';
 import "../Styles/Hero.css"
 
 let titleText;
@@ -12,6 +14,7 @@ let titleText;
 const Hero = () => {
   const { globalState, setGlobalState } = useContext(Store);
   const [term, setTerm] = useState('');
+  const [amount, setAmount] = useState('');
   const [open, setOpen] = useState(false);
   const [foodTitle, setFoodtitle] = useState({});
 
@@ -22,17 +25,21 @@ const Hero = () => {
     setOpen(false);
   };
 
-  const ref = useRef(true);
+  const onlyNumbers = n => {
+    return n.replace(/[０-９]/g, s => String.fromCharCode(s.charCodeAt(0) - 65248)).replace(/\D/g, '');
+  }
 
   const setDisplay = async () => {
-    if (term !== "") {
+    if (term !== "" && amount !== "") {
       setOpen(false);
       setFoodtitle({});
-      setGlobalState({ type: 'SET_LOADING', payload: true })
+      setGlobalState({ type: 'SET_LOADING', payload: true });
       await axios.get(`https://script.google.com/macros/s/AKfycbzO6IMoPPbtBLb_AnRwgB1OheJyF5XwgNyj28NZdyjg76q4AzX0/exec/exec?name=${term}`).then((res) => {
         const foods = res.data;
-        setGlobalState({ type: 'SET_LOADING', payload: false })
-        setGlobalState({ type: 'SET_FOODS', payload: Object.entries(foods) })
+        setGlobalState({ type: 'SET_LOADING', payload: false });
+        setGlobalState({ type: 'SET_FOODS', payload: Object.entries(foods) });
+        console.log(amount)
+        setGlobalState({ type: 'SET_WEIGHT', payload: amount });
         //setFoodData(Object.entries(foods));
         //console.log(foodNum)
       })
@@ -43,9 +50,12 @@ const Hero = () => {
 
   const action = (
     <>
-      <Button color="secondary" size="small" onClick={handleClose}>
+      {/* <Button color="secondary" size="small" onClick={handleClose}>
         UNDO
-      </Button>
+      </Button> */}
+      <IconContext.Provider value={{ color: '#ccc', size: '30px' }}>
+        <AiOutlineCloseSquare onClick={handleClose} />
+      </IconContext.Provider>
     </>
   );
 
@@ -82,13 +92,21 @@ const Hero = () => {
   return (
     <>
       <div className='input-wrap'>
-        <div className='input-text'>
+        <div className='input-text-mane'>
           <TextField
             id="outlined-basic"
             label="食品名を入力"
             variant="outlined"
             onChange={e => setTerm(e.target.value)}
             value={term} />
+        </div>
+        <div className='input-text-num'>
+          <TextField
+            id="outlined-basic"
+            label="グラム数を入力"
+            variant="outlined"
+            onChange={e => setAmount(onlyNumbers(e.target.value))}
+            value={amount} />
         </div>
         <div className='input-button'>
           <Button
@@ -107,7 +125,7 @@ const Hero = () => {
         open={open}
         autoHideDuration={6000}
         onClose={handleClose}
-        message="食品名を入力してください"
+        message="食品名とグラム数を入力してください"
         action={action}
       />
     </>

@@ -11,12 +11,23 @@ import './Styles/FoodSearch.css'
 const FoodSearch = () => {
   const weight = "100";
   const { globalState, setGlobalState } = useContext(Store);
-  const [foodNum, setFoodNum] = useState('');
+  const foodWight = useRef('');
+  const [foodNum, setFoodNum] = useState({});
   const [foodsData, setFoodsData] = useState([]);
 
+  useEffect(() => {
+    if (globalState.weight !== undefined && globalState.weight !== null) {
+      foodWight.current = globalState.weight;
+      //setFoodNum('');
+      //setFoodWeight(foodWight);
+      //console.log(foodWight)
+    }
+  }, [globalState.weight])
+
   useEffect(async () => {
+    console.log(foodNum)
     setGlobalState({ type: 'SET_TITLE', payload: true });
-    await axios.get(`https://script.google.com/macros/s/AKfycbx7WZ-wdIBLqVnCxPwzedIdjhC3CMjhAcV0MufN2gJd-xsO3xw/exec?num=${foodNum}&weight=${weight}`).then((res) => {
+    await axios.get(`https://script.google.com/macros/s/AKfycbx7WZ-wdIBLqVnCxPwzedIdjhC3CMjhAcV0MufN2gJd-xsO3xw/exec?num=${foodNum.num}&weight=${foodNum.wei}`).then((res) => {
       console.log(res.data)
       setGlobalState({ type: 'SET_TITLE', payload: false });
       setGlobalState({ type: "SET_KCAL", payload: res.data })
@@ -28,13 +39,13 @@ const FoodSearch = () => {
     if (globalState.foods !== undefined && globalState.foods !== null) {
       setFoodsData(globalState.foods);
     }
-  },[ globalState.foods ])
+  }, [globalState.foods])
 
   if (globalState.Loading) {
     return (
       <div className='loading-wrap'>
         <div className='circul'>
-        <CircularProgress />
+          <CircularProgress />
         </div>
       </div>
     )
@@ -61,7 +72,7 @@ const FoodSearch = () => {
                 foodsData ? foodsData.map((food, index) => (
                   <ListItem key={`food-${index}`}>
                     <ListItemButton>
-                      <ListItemText onClick={() => setFoodNum(food[1].split(',')[0])}>{food[1].split(',')[1]}</ListItemText>
+                      <ListItemText onClick={() => setFoodNum({ num:food[1].split(',')[0], wei: foodWight.current})}>{food[1].split(',')[1]}</ListItemText>
                     </ListItemButton>
                   </ListItem>
                 )) : <span></span>

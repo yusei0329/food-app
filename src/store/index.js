@@ -4,6 +4,7 @@ const initialState = {
   isLoading: false,
   isError: '',
   post: {},
+  weight: 0,
   score: 0,
   events: null,
   foods: [],
@@ -16,6 +17,11 @@ const reduer = (state, action) => {
       return {
         post: action.payload
       }
+
+    case 'SET_WEIGHT': 
+    return {
+      weight: action.payload
+    }
 
     case 'SET_FOODS':
       return {
