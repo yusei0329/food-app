@@ -8,16 +8,23 @@ import '../Styles/View.css'
 
 const View = () => {
   const { globalState } = useContext(Store);
+  const [eventData, setEventData] = useState([]);
+
+  useEffect(() => {
+    if(globalState.events !== undefined && globalState.events !== null){
+      setEventData(globalState.events.reverse());
+    }
+  },[ globalState.events ])
 
   return (
     <div className='view-wrap'>
-      <h3>過去のデータ</h3>
+      <h2>過去のデータ</h2>
       <div className='view-list'> 
         <List
           sx={{
             width: '100%',
-            minWidth: 400,
-            maxWidth: 1000,
+            minWidth: 350,
+            maxWidth: 500,
             bgcolor: 'background.paper',
             position: 'relative',
             overflow: 'auto',
@@ -26,19 +33,16 @@ const View = () => {
           }}
           subheader={<li />}
         >
-
-
-
           <ul>
             {
               // //foodData[0]
-              globalState.events ? globalState.events.map((event, index) => (
+              eventData.length !== 0 ? eventData.map((event, index) => (
                 <ListItem key={`food-${index}`}>
                   <ListItemButton>
                     <ListItemText>{`${event.days}, Score ${event.points}%`}</ListItemText>
                   </ListItemButton>
                 </ListItem>
-              )) : <span>過去のデータが表示されます</span>
+              )) : <span className='view-span'>過去のデータが表示されます</span>
             }
           </ul>
         </List>

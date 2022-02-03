@@ -69,13 +69,13 @@ const FoodSearch = () => {
             <ul>
               {
                 // //foodData[0]
-                foodsData ? foodsData.map((food, index) => (
+                foodsData.length !== 0 ? foodsData.map((food, index) => (
                   <ListItem key={`food-${index}`}>
                     <ListItemButton>
                       <ListItemText onClick={() => setFoodNum({ num:food[1].split(',')[0], wei: foodWight.current})}>{food[1].split(',')[1]}</ListItemText>
                     </ListItemButton>
                   </ListItem>
-                )) : <span></span>
+                )) : <span className='list-span'>検索結果が表示されます<br/>データが存在しません</span>
               }
             </ul>
           </List>

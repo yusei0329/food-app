@@ -6,7 +6,7 @@ const initialState = {
   post: {},
   weight: 0,
   score: 0,
-  events: null,
+  events: [],
   foods: [],
   Loading: false
 }

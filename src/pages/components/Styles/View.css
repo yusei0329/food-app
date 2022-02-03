@@ -5,5 +5,11 @@
 }
 
 .view-list {
-  margin: 25px;
+  margin-top: 20px;
+}
+
+.view-span {
+  font-size: 1.2em;
+  letter-spacing: 0.1em;
+  line-height: 2em;
 }
