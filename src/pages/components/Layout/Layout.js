@@ -1,6 +1,5 @@
 import React from 'react'
 import Header from '../Header/Header'
-import Footer from '../Footer/Footer'
 import Grid from '@mui/material/Grid'
 import Style from '../Styles/Layout.css'
 
