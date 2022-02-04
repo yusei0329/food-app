@@ -25,7 +25,7 @@ const FoodList = () => {
       viewData.map((score) => (
         total += Number(score.kcal)
       ))
-      total = (total / 2000) * 100;
+      total = (total / 2500) * 100;
       const ratio = Math.floor(total);
       setGlobalState({ type: 'SET_SCORE', payload: ratio })
       //console.log(globalState.score)
